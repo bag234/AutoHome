@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>test a03</title>
+</head>
+<body>
+	<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+	<script type="text/javascript">
+		var MaximalDeap = 20;
+
+		var name = '';
+
+		var data = [];
+
+		var chart = new CanvasJS.Chart("chartContainer", {
+				title:{
+				text: ""             
+			},
+			data: [              
+			{
+				// Change type to "doughnut", "line", "splineArea", etc.
+				type: "line",
+				dataPoints: data
+			}
+			]
+		});
+
+		function getUrlVars() {
+	    	var vars = {};
+	    	var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+	        	vars[key] = value;
+	    	});
+	    	return vars;
+		}
+
+		function drawChatch(jsono){
+			name = jsono.Name;
+			
+			var buf_data = jsono.Data; 
+			
+			for(i = 0; i < buf_data.length; i++){
+				data.push({label: buf_data[i].Date, y: buf_data[i].Count}); 
+			}
+			if(data.length > MaximalDeap){
+				data.shift();
+			}
+	
+			chart.render();
+		}
+		window.onload = function () {
+			MaximalDeap = 20;
+			updateInterval = 1000;
+			name = getUrlVars()["Login"];;
+
+			var patchURL = 'Get';
+			
+			var params = 'Login=' + getUrlVars()["Login"];
+
+			var myRequest = new XMLHttpRequest();
+
+			myRequest.open('POST', patchURL, false);
+
+			myRequest.onreadystatechange = function () {
+				if(myRequest.readyState == 4){
+					drawChatch(JSON.parse(myRequest.response));
+				}
+
+			}
+
+			chart = new CanvasJS.Chart("chartContainer", {
+			title:{
+					text: "(Login)" + name          
+				},
+				data: [              
+				{
+				
+					type: "column",
+					dataPoints: data
+				}
+				]
+			});
+			myRequest.setRequestHeader("Content-Type","application/x-www-form-urlencoded; charset=utf-8");
+			myRequest.send(params);
+			//setInterval(function(){myRequest.send("Login=test&Count=NEW");}, 1000);
+			//drawChatch(JSON.parse('{"Data":[{"Count":28,"Date":"2020-03-24"},{"Count":29,"Date":"2020-03-24"},{"Count":2,"Date":"2020-03-24"},{"Count":3,"Date":"2020-03-24"},{"Count":4,"Date":"2020-03-24"},{"Count":5,"Date":"2020-03-24"},{"Count":6,"Date":"2020-03-24"},{"Count":7,"Date":"2020-03-24"},{"Count":8,"Date":"2020-03-24"},{"Count":9,"Date":"2020-03-24"}],"Name":"newName"} '));				
+		}
+		
+	</script>
+	<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	it's work!<br/>
+	<a href="sensor">sensor</a>
+	<a href="sensor/Set?Login=test&Count=23">AddParametrs</a><br/>
+	
+	<br/>
+	<a href="sensor/Get?Login=test&Count=">GetSensor(NULL)</a><br/>
+	<a href="sensor/Get?Login=test&Count=NEW">GetSensor(NEW)</a><br/>
+	<a href="sensor/Get?Login=test&Count=ALL">GetSensor(ALL)</a><br/>
+	
+	<h1>Add Sensor</h1>
+	<form action="sensor/Add" method="Get">
+		Login: <input type="text" name="Login"><br/>
+		Type:  <input type="text" name="Type"><br/>
+		Name:  <input type="text" name="Name"><br/>
+		<button name="Add" value="ok">Add</button>
+	</form>
+	<br/>
+	<h1>Add Count sensor</h1>
+	<form action="sensor/Set" method="Get">
+		Login: <input type="text" name="Login"><br/>
+		Count: <input type="text" name="Count"><br/>
+		<button name="Add" value="ok">Add</button>
+	</form>
+	<br/>
+	<h1>Viev graphic</h1>
+	<form action="sensor/Viev" method="Get">
+		Login: <input type="text" name="Login"><br/>
+		<button name="Add" value="ok">ok</button>
+	</form>
+</body>
+</html>
